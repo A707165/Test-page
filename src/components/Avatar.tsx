@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom'
 import Avatar from 'react-avatar-edit'
 import Dropzone from 'react-dropzone'
 import ein from './einstein.jpg'
-
+import {useDropzone} from 'react-dropzone';
 import Slider from "@mui/material/Slider";
 import Cropper from "react-easy-crop";
 import { Point, Area } from "react-easy-crop/types";
@@ -25,33 +25,7 @@ const CROP_AREA_ASPECT = 2 / 2;
 
 
 
-const Output = ({croppedArea}: any) => {
-  const scale = 100 / croppedArea.width;
-  const transform = {
-    x: `${-croppedArea.x * scale}%`,
-    y: `${-croppedArea.y * scale}%`,
-    scale,
-    width: "calc(100% + 0.5px)",
-    height: "auto"
-  };
 
-  const imageStyle = {
-    transform: `translate3d(${transform.x}, ${transform.y}, 0) scale3d(${transform.scale},${transform.scale},1)`,
-    width: transform.width,
-    height: transform.height,
-    borderRadius: "50%"
-    
-  };
-
-  return (
-    <div
-      className="output"
-      style={{ paddingBottom: `${100 / CROP_AREA_ASPECT}%`, borderRadius: "50%"}}
-    >
-      <img src={ein} alt="" style={imageStyle} />
-    </div>
-  );
-};
 
 interface iAvatarEdit{
   getAvatar : (croppedArea: any) => void
@@ -62,7 +36,28 @@ const AvatarEdit = ({getAvatar}: iAvatarEdit) => {
   const [crop, setCrop] = useState<Point>({ x: 0, y: 0 });
   const [zoom, setZoom] = useState(1);
   const [croppedArea, setCroppedArea] = useState<any>(null);
+  const [image,setImage] = useState<any>(ein);
 
+ 
+  const onDrop = useCallback(acceptedFiles => {
+    
+    const reader = new FileReader()
+    reader.readAsArrayBuffer(acceptedFiles[0])
+
+    reader.onabort = () => console.log('file reading was aborted')
+    reader.onerror = () => console.log('file reading has failed')
+    reader.onload = () => {
+      
+      const binaryStr = reader.result
+      setImage(acceptedFiles[0].path);
+      console.log(acceptedFiles[0])
+   }
+
+    
+      console.log(image)
+    }, [])
+    const {getRootProps, getInputProps, isDragActive} = useDropzone({onDrop})
+  
   
 
 
@@ -80,7 +75,7 @@ const AvatarEdit = ({getAvatar}: iAvatarEdit) => {
     <div className="App">
       <div className="cropper">
         <Cropper
-          image={ein}
+          image={image}
           crop={crop}
           zoom={zoom}
           aspect={CROP_AREA_ASPECT}
@@ -110,7 +105,14 @@ const AvatarEdit = ({getAvatar}: iAvatarEdit) => {
         />
      
         </Grid>
-
+        <div {...getRootProps()}>
+        <input {...getInputProps()} />
+        {
+        isDragActive ?
+          <p>Drop the files here ...</p> :
+          <p>Drag 'n' drop some files here, or click to select files</p>
+        }
+      </div>
        
 
         
