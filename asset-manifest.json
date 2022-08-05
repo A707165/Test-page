@@ -1,0 +1,20 @@
+{
+  "files": {
+    "main.css": "/OnePagerGenerator/static/css/main.91ed0737.css",
+    "main.js": "/OnePagerGenerator/static/js/main.1080c2bf.js",
+    "static/js/703.670073a4.chunk.js": "/OnePagerGenerator/static/js/703.670073a4.chunk.js",
+    "static/js/261.655ef0e0.chunk.js": "/OnePagerGenerator/static/js/261.655ef0e0.chunk.js",
+    "static/js/787.324aa118.chunk.js": "/OnePagerGenerator/static/js/787.324aa118.chunk.js",
+    "static/media/einstein.jpg": "/OnePagerGenerator/static/media/einstein.a224b9a54b41c27b65d2.jpg",
+    "index.html": "/OnePagerGenerator/index.html",
+    "main.91ed0737.css.map": "/OnePagerGenerator/static/css/main.91ed0737.css.map",
+    "main.1080c2bf.js.map": "/OnePagerGenerator/static/js/main.1080c2bf.js.map",
+    "703.670073a4.chunk.js.map": "/OnePagerGenerator/static/js/703.670073a4.chunk.js.map",
+    "261.655ef0e0.chunk.js.map": "/OnePagerGenerator/static/js/261.655ef0e0.chunk.js.map",
+    "787.324aa118.chunk.js.map": "/OnePagerGenerator/static/js/787.324aa118.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.91ed0737.css",
+    "static/js/main.1080c2bf.js"
+  ]
+}
