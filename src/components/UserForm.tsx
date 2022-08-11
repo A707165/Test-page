@@ -10,13 +10,14 @@ import Step from '@mui/material/Step';
 import StepLabel from '@mui/material/StepLabel';
 import Button from '@mui/material/Button';
 import Link from '@mui/material/Link';
+import Switch from '@mui/material/Switch';
 import Typography from '@mui/material/Typography';
 import AvatarEdit from './Avatar';
 import {ionSave} from '../App'
 //import {iRenderedForm} from './RenderedForm'
 
 interface iUserForm {
-onSave : ({name,surname,why,education,core,relevant,role,croppedArea}: ionSave) => void
+onSave : ({name,surname,why,education,core,relevant,role,croppedArea,image}: ionSave) => void
 
 }
 
@@ -30,12 +31,13 @@ const [core,setCore] = useState<String>('');
 const [relevant,setRelevant] = useState<String>('');
 const [role,setRole] = useState<String>('');
 const [croppedArea,setcroppedArea] = useState<any>();
+const [image, setImage] = useState<any>();
 
-
-const getAvatar = ({croppedArea} : any) =>{
+const getAvatar = (croppedArea: any, image: any ) =>{
 
 setcroppedArea(croppedArea)
-console.log(croppedArea)
+setImage(image)
+
 }
 
 
@@ -56,6 +58,7 @@ return(
           <TextField fullWidth margin="normal" value={role} onChange={e => setRole(e.target.value)} id="role" label="Role" variant="outlined" />
           </Grid>
           <Grid item xs={6} >
+          <Switch defaultChecked />
           <TextField
           fullWidth 
           value={why}
@@ -111,7 +114,7 @@ return(
         <Grid position={'relative'} item xl={4}>
           <Button 
           variant="outlined"
-          onClick={()=> onSave({name,surname,why,education,core,relevant,role,croppedArea})}
+          onClick={()=> onSave({name,surname,why,education,core,relevant,role,croppedArea,image})}
           >
             Save
           </Button>

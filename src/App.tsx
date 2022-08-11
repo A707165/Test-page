@@ -28,6 +28,7 @@ export interface ionSave {
   relevant: String
   role: String
   croppedArea : any
+  image: any
 }
 const App = () => {
 
@@ -41,9 +42,9 @@ const App = () => {
   const [relevant,setRelevant] = useState<String>('');
   const [role,setRole] = useState<String>('');
   const [croppedArea,setcroppedArea] = useState<any>('');
-
+  const [image, setImage] = useState<any>();
   
-  const onSave = ({name,surname,why,education,core,relevant,role,croppedArea}: ionSave) =>{
+  const onSave = ({name,surname,why,education,core,relevant,role,croppedArea,image}: ionSave) =>{
 
   setName(name);
   setSurname(surname);
@@ -53,7 +54,8 @@ const App = () => {
   setRelevant(relevant);
   setRole(role);
   setcroppedArea(croppedArea);
-  
+  setImage(image);
+  console.log(image)
   }
 
 
@@ -82,7 +84,7 @@ const App = () => {
     <UserForm onSave={onSave}/>
 
    
-    <RenderedForm name={name} surname={surname} why={why} education={education} core={core} relevant={relevant} role={role} croppedArea={croppedArea}  />  
+    <RenderedForm name={name} surname={surname} why={why} education={education} core={core} relevant={relevant} role={role} croppedArea={croppedArea} image={image} />  
     
     </Container>
     

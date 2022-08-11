@@ -2,7 +2,7 @@ import React, { useState,useCallback } from 'react'
 import ReactDOM from 'react-dom'
 import Avatar from 'react-avatar-edit'
 import Dropzone from 'react-dropzone'
-import ein from './einstein.jpg'
+import portriatPlaceholder from './portraitPlaceholder.png'
 import {useDropzone} from 'react-dropzone';
 import Slider from "@mui/material/Slider";
 import Cropper from "react-easy-crop";
@@ -28,36 +28,35 @@ const CROP_AREA_ASPECT = 2 / 2;
 
 
 interface iAvatarEdit{
-  getAvatar : (croppedArea: any) => void
+  getAvatar : (croppedArea: any, image: any) => void
 }
 const AvatarEdit = ({getAvatar}: iAvatarEdit) => {
 
-  
   const [crop, setCrop] = useState<Point>({ x: 0, y: 0 });
   const [zoom, setZoom] = useState(1);
   const [croppedArea, setCroppedArea] = useState<any>(null);
-  const [image,setImage] = useState<any>(ein);
+  const [image, setImage] = useState<any>(portriatPlaceholder);
+
 
  
-  const onDrop = useCallback(acceptedFiles => {
+  const onDrop = ( acceptedFiles : any ) => {
     
     const reader = new FileReader()
-    reader.readAsArrayBuffer(acceptedFiles[0])
+    reader.readAsDataURL(acceptedFiles[0])
 
     reader.onabort = () => console.log('file reading was aborted')
     reader.onerror = () => console.log('file reading has failed')
     reader.onload = () => {
-      
       const binaryStr = reader.result
-      setImage(acceptedFiles[0].path);
-      console.log(acceptedFiles[0])
-   }
-
-    
-      console.log(image)
-    }, [])
-    const {getRootProps, getInputProps, isDragActive} = useDropzone({onDrop})
+      setImage(binaryStr);
+    }
   
+  }
+    const {getRootProps, getInputProps, isDragActive} = useDropzone({
+      accept: {
+        'image/png': ['.png', '.jpg'],
+      },
+      onDrop})
   
 
 
@@ -82,7 +81,7 @@ const AvatarEdit = ({getAvatar}: iAvatarEdit) => {
           onCropComplete={
             (croppedArea) => {
               setCroppedArea(croppedArea)
-              getAvatar({croppedArea})
+              getAvatar(croppedArea,image)
             }
           }
           cropShape="round"
