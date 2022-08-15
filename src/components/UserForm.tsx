@@ -52,13 +52,13 @@ return(
       
       }}>
         <Grid container position={'relative'} item xs={8} spacing={2} sx={{ mb: 2 ,mt:2 }}> 
-          <Grid item xs={12} >
+          <Grid item xs={12} sx={{ mb: 0 ,mt:0 }}>
           <TextField fullWidth margin="normal" value={name} onChange={e => setName(e.target.value)} id="name" label="Name" variant="outlined" />
           <TextField fullWidth margin="normal" value={surname} onChange={e => setSurname(e.target.value)} id="surname" label="Surname" variant="outlined" />
           <TextField fullWidth margin="normal" value={role} onChange={e => setRole(e.target.value)} id="role" label="Role" variant="outlined" />
           </Grid>
-          <Grid item xs={6} >
-          <Switch defaultChecked />
+          <Grid item xs={6} sx={{ mb: 0 ,mt:0 }}>
+          <Switch id='disableWhy' defaultChecked />
           <TextField
           fullWidth 
           value={why}

@@ -12,6 +12,7 @@ import Stack from '@mui/material/Stack';
 import Paper from '@mui/material/Paper';
 import { Container } from '@mui/system';
 import { styled } from '@mui/material/styles';
+import FileUploadIcon from '@mui/icons-material/FileUpload';
 import '../styles/Avatar.css'
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
@@ -104,14 +105,22 @@ const AvatarEdit = ({getAvatar}: iAvatarEdit) => {
         />
      
         </Grid>
-        <div {...getRootProps()}>
+        <Grid {...getRootProps()} position={'relative'} item xs={12}>
+        <Paper>
         <input {...getInputProps()} />
+        
         {
         isDragActive ?
-          <p>Drop the files here ...</p> :
-          <p>Drag 'n' drop some files here, or click to select files</p>
+          <p><FileUploadIcon />Drop the files here ...</p> :
+          <p><FileUploadIcon />Drag and drop your profile picture or click to search on disk</p>
         }
-      </div>
+
+
+        </Paper>
+        
+
+        </Grid>
+      
        
 
         
