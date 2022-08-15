@@ -4,7 +4,7 @@ import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
 import Toolbar from '@mui/material/Toolbar';
 import Paper from '@mui/material/Paper';
-import { Avatar, Grid, TextField } from '@mui/material';
+import { Avatar, FormControlLabel, Grid, TextField } from '@mui/material';
 import Stepper from '@mui/material/Stepper';
 import Step from '@mui/material/Step';
 import StepLabel from '@mui/material/StepLabel';
@@ -17,7 +17,7 @@ import {ionSave} from '../App'
 //import {iRenderedForm} from './RenderedForm'
 
 interface iUserForm {
-onSave : ({name,surname,why,education,core,relevant,role,croppedArea,image}: ionSave) => void
+onSave : ({name,surname,why,education,core,relevant,role,fieldsToInclude,croppedArea,image}: ionSave) => void
 
 }
 
@@ -30,6 +30,16 @@ const [education,setEducation] = useState<String>('');
 const [core,setCore] = useState<String>('');
 const [relevant,setRelevant] = useState<String>('');
 const [role,setRole] = useState<String>('');
+const [softSkills,setSoftSkills] = useState<String>('');
+const [languages,setLanguages] = useState<String>('');
+
+const [includeWhy,setIncludeWhy] = useState<boolean>(true);
+const [includeCore,setIncludeCore] = useState<boolean>(true);
+const [includeEducation,setIncludeEducation] = useState<boolean>(true);
+const [includeRelevant,setIncludeRelevant] = useState<boolean>(true);
+const [includeSoftSkills,setIncludeSoftSkills] = useState<boolean>(true);
+const [includeLanguages,setIncludeLanguages] = useState<boolean>(true);
+
 const [croppedArea,setcroppedArea] = useState<any>();
 const [image, setImage] = useState<any>();
 
@@ -58,7 +68,7 @@ return(
           <TextField fullWidth margin="normal" value={role} onChange={e => setRole(e.target.value)} id="role" label="Role" variant="outlined" />
           </Grid>
           <Grid item xs={6} sx={{ mb: 0 ,mt:0 }}>
-          <Switch id='disableWhy' defaultChecked />
+          <FormControlLabel control={<Switch id='includeWhy' checked={includeWhy} onChange={() => setIncludeWhy(!includeWhy) }/>} label="Include in PDF" />
           <TextField
           fullWidth 
           value={why}
@@ -70,56 +80,84 @@ return(
           />
           </Grid>
           <Grid item xs={6} >
+          <FormControlLabel control={<Switch id='includeCore' checked={includeCore} onChange={() => setIncludeCore(!includeCore) }/>} label="Include in PDF" />
           <TextField
           fullWidth 
           value={core}
           id="core"
           onChange={e => setCore(e.target.value)}
           label="Your core competencies "
-          placeholder="Tell something about yourself"
+          placeholder="What are your core competencies?"
           multiline
           />
           </Grid>
           
           <Grid item xs={6} >
+          <FormControlLabel control={<Switch id='includeEducation' checked={includeEducation} onChange={() => setIncludeEducation(!includeEducation)}/>} label="Include in PDF" />
           <TextField
           fullWidth 
           value={education}
           id="education"
           onChange={e => setEducation(e.target.value)}
           label="Your education"
-          placeholder="Tell something about yourself"
+          placeholder="What is your education?"
           multiline
           />
          
           </Grid>
          
           <Grid item xs={6} >
+          <FormControlLabel control={<Switch id='includeRelevant' checked={includeRelevant} onChange={() => setIncludeRelevant(!includeRelevant)}/>} label="Include in PDF" />
           <TextField
           fullWidth 
           value={relevant}
           id="relevant"
           onChange={e => setRelevant(e.target.value)}
           label="Your relevant experiance "
-          placeholder="Tell something about yourself"
+          placeholder="What is your experiance relevant to project?"
           multiline
           />
           </Grid>
-          
+          <Grid item xs={6} >
+          <FormControlLabel control={<Switch id='includeSoftSkills' checked={includeSoftSkills} onChange={() => setIncludeSoftSkills(!includeSoftSkills)}/>} label="Include in PDF" />
+          <TextField
+          fullWidth 
+          value={softSkills}
+          id="relevant"
+          onChange={e => setSoftSkills(e.target.value)}
+          label="Your soft skills "
+          placeholder="What are your softskills?"
+          multiline
+          />
+          </Grid>
+          <Grid item xs={6} >
+          <FormControlLabel control={<Switch id='includeLanguages' checked={includeLanguages} onChange={() => setIncludeLanguages(!includeLanguages)}/>} label="Include in PDF" />
+          <TextField
+          fullWidth 
+          value={languages}
+          id="relevant"
+          onChange={e => setLanguages(e.target.value)}
+          label="Languages that you know"
+          placeholder="What languages do you know?"
+          multiline
+          />
+          </Grid>
+          <Grid position={'relative'} item xs={12}>
+          <Button 
+          fullWidth
+          variant="contained"
+          onClick={()=> onSave({name,surname,why,education,core,relevant,role,softSkills,languages,fieldsToInclude:[includeWhy,includeCore,includeEducation,includeRelevant,includeSoftSkills,includeLanguages],croppedArea,image})}
+          >
+            Display preview
+          </Button>
+
+        </Grid>  
           
         </Grid>
         <Grid position={'relative'} item xs={4}>
           <AvatarEdit getAvatar={getAvatar}/>
         </Grid>
-        <Grid position={'relative'} item xl={4}>
-          <Button 
-          variant="outlined"
-          onClick={()=> onSave({name,surname,why,education,core,relevant,role,croppedArea,image})}
-          >
-            Save
-          </Button>
-
-        </Grid>
+        
         
     </Grid>
    

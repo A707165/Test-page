@@ -7,6 +7,7 @@ import { Button, ButtonBase, Container, Grid, Stack, styled, Typography } from '
 interface iTile{
     title: any,
     content: any 
+    display: boolean
 
 }
 
@@ -15,25 +16,31 @@ const Item = styled(Paper)(({ theme }) => ({
     ...theme.typography.body2,
     padding: theme.spacing(1),
     textAlign: 'left',
+    boxShadow: 'none',
     color: 'white',
     overflowWrap: 'break-word',
     fontSize:'10px'
     
 }));
 
-const Tile = ({content,title}: iTile) =>{
+const Tile = ({content,title,display}: iTile) =>{
 
 
 
+if(display){
+    return(
 
-return(
+        <Item>
+        <Typography color='rgb(5, 150, 255)' variant='h5'>{title}</Typography> 
+        <Item> {content} </Item>
+        </Item>
+     
+    )
 
-    <Item>
-    <Typography color='rgb(5, 150, 255)' variant='h5'>{title}?</Typography> 
-    <Item> {content} </Item>
-    </Item>
- 
-)
+}else{
+    return(null);
+}
+
 }
 
 

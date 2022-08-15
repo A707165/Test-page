@@ -27,6 +27,9 @@ export interface ionSave {
   core:String
   relevant: String
   role: String
+  softSkills: String
+  languages: String
+  fieldsToInclude: boolean[]
   croppedArea : any
   image: any
 }
@@ -41,10 +44,13 @@ const App = () => {
   const [core,setCore] = useState<String>('');
   const [relevant,setRelevant] = useState<String>('');
   const [role,setRole] = useState<String>('');
+  const [softSkills,setSoftSkills] = useState<String>('');
+  const [languages,setLanguages] = useState<String>('');
   const [croppedArea,setcroppedArea] = useState<any>('');
   const [image, setImage] = useState<any>();
+  const [fieldsToInclude,setFieldsToInclude] = useState<boolean[]>([true,true,true,true,true,true]);
   
-  const onSave = ({name,surname,why,education,core,relevant,role,croppedArea,image}: ionSave) =>{
+  const onSave = ({name,surname,why,education,core,relevant,role,softSkills,languages,fieldsToInclude,croppedArea,image}: ionSave) =>{
 
   setName(name);
   setSurname(surname);
@@ -53,9 +59,13 @@ const App = () => {
   setCore(core);
   setRelevant(relevant);
   setRole(role);
+  setSoftSkills(softSkills);
+  setLanguages(languages)
   setcroppedArea(croppedArea);
   setImage(image);
-  console.log(image)
+  setFieldsToInclude(fieldsToInclude);
+
+  
   }
 
 
@@ -84,7 +94,7 @@ const App = () => {
     <UserForm onSave={onSave}/>
 
    
-    <RenderedForm name={name} surname={surname} why={why} education={education} core={core} relevant={relevant} role={role} croppedArea={croppedArea} image={image} />  
+    <RenderedForm name={name} surname={surname} why={why} education={education} core={core} relevant={relevant} role={role} softSkills={softSkills} languages={languages} fieldsToInclude={fieldsToInclude} croppedArea={croppedArea} image={image} />  
     
     </Container>
     

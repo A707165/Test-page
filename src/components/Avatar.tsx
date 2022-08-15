@@ -93,8 +93,9 @@ const AvatarEdit = ({getAvatar}: iAvatarEdit) => {
         </div>
         </div>
         </Grid>
-   <Grid position={'relative'} item xs={12}>
+   <Grid position={'relative'} item xs={12}> 
         <Slider
+          sx={{ ml:2, mr:4}}
           value={zoom}
           min={1}
           max={3}

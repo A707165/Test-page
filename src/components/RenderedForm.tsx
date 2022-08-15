@@ -13,8 +13,10 @@ import Tile from './Tile';
 
     croppedArea: any
 }*/
+import DomToImage from 'dom-to-image';
 import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
+import { Scale } from '@mui/icons-material';
 
 
 const CROP_AREA_ASPECT = 2 / 2;
@@ -28,27 +30,43 @@ const generatePDF = () =>{
     orientation: "landscape",
     unit: "px",
     userUnit: 300,
-    hotfixes: ["px_scaling"]
+    hotfixes: ["px_scaling"],
+    format:  'a4'
+   
+    
     
   });
   let width = pdf.internal.pageSize.getWidth();
   let height = pdf.internal.pageSize.getHeight();
+  let options = {
+    quality: 1,
+    width: 1122*4,
+    height: 793*4
+};
+
+  DomToImage.toJpeg(domElement, options).then(function (dataUrl) {
+
+
+   // pdf.addImage(dataUrl, 'JPEG', 0, 0,1122*4,793*4);
+  //  pdf.save(`${new Date().toISOString()}.pdf`);
+  
+});
 
     html2canvas(domElement, {
-      windowHeight:900,
-      windowWidth:1500,
+      windowHeight:793,
+      windowWidth:1122,
       height:793,
-      width:1122
+      width:1122,
+      scale: 1,
     }).then(canvas => {
       const imgData = canvas.toDataURL("image/png");
-      
-     
+
       console.log(width,height)
-      pdf.addImage(imgData, 'JPEG', 0, 0,1122,793);
+      pdf.addImage(imgData, 'JPEG', 0, 0,1122,793,'SLOW');
       pdf.save(`${new Date().toISOString()}.pdf`);
     });
-  
-}
+  }
+
 
 
 
@@ -84,10 +102,10 @@ console.log(croppedArea)
 
 
 
-const RenderedForm = ({name,surname,why,education,core,relevant,role,croppedArea,image} : ionSave) => {
+const RenderedForm = ({name,surname,why,education,core,relevant,role,softSkills,languages,fieldsToInclude,croppedArea,image} : ionSave) => {
     
 const Item = styled(Paper)(({ theme }) => ({
-    backgroundColor: 'rgb(15, 15, 15)',
+    backgroundColor: 'rgb(9, 9, 9)',
     ...theme.typography.body2,
     padding: theme.spacing(1),
     textAlign: 'left',
@@ -97,45 +115,57 @@ const Item = styled(Paper)(({ theme }) => ({
     
 }));
     
-
+console.log(fieldsToInclude)
 
 
 return(
-<Container maxWidth={false} >
+<Grid container item xs={8} >
 <Paper
 id={'OnePagerResult'}
 sx={{
     p: 2,
     borderRadius:0,
+    border: 0,
     margin: 'auto',
     maxWidth: 1122,
     minWidth: 1122,
     maxHeight: 793,
     minHeight: 793,
     flexGrow: 1,
-    backgroundColor: (theme) =>'rgb(15, 15, 15)',
+    backgroundColor: (theme) =>'rgb(9, 9, 9)',
     color: 'white',
        
 }}
 >
-        <Grid  spacing={2} rowSpacing={2} container>
+        <Grid  spacing={2} rowSpacing={2}   container>
             <Grid item xs={2} >
                 <ButtonBase sx={{ width: 150, height: 150 }}>
                     {<Output croppedArea={croppedArea}  image={image} cropShape='round'/>}
                 </ButtonBase>
             </Grid>  
-            <Grid item xs={10} container direction={'column'}>
+            <Grid item xs={4} container direction={'column'}>
               <Typography  variant='h4'>{name}</Typography>  
               <Typography  variant='h4'>{surname}</Typography>
               <Typography color='rgb(5, 150, 255)' variant='h5'>{role}</Typography>
             </Grid>
-            <Grid item  xs={6}  zeroMinWidth className="display-linebreak" >
+            <Grid item  xs={2} className="display-linebreak" > 
+           
+            <Tile title={'Soft Skills'} display={fieldsToInclude[4]} content={softSkills}></Tile>
+            
+            </Grid>
+            <Grid item  xs={2}  className="display-linebreak" > 
+
+            <Tile title={'Languages'} display={fieldsToInclude[5]} content={languages}></Tile>
+            
+            </Grid>
+
+
+            <Grid item  xs={6}  zeroMinWidth  className="display-linebreak" >
             <Stack spacing={2}>
             
-              <Typography color='rgb(5, 150, 255)' variant='h5'>Why {name}?</Typography> 
-              <Item> {why} </Item>
+              <Tile title={'Why '+name+'?'} display={fieldsToInclude[0]} content={why}></Tile>
 
-              <Tile title={'Education,Trainings/Certification'} content={education}></Tile>
+              <Tile title={'Education, Trainings/Certification'} display={fieldsToInclude[1]} content={education}></Tile>
               
               
            
@@ -143,24 +173,24 @@ sx={{
             </Grid>
             <Grid item  xs={6}  className="display-linebreak" > 
             <Stack spacing={2}>
-               
-              <Typography color='rgb(5, 150, 255)' variant='h5'>Core competencies/Technologies</Typography>
-              <Item>{core}</Item>
-              <Typography color='rgb(5, 150, 255)' variant='h5'>Relevant project Experiance</Typography>    
-              <Item> {relevant}</Item>   
+            <Tile title={'Core competencies/Technologies'} display={fieldsToInclude[2]} content={core}></Tile>
+            <Tile title={'Relevant project experience'} display={fieldsToInclude[3]} content={relevant}></Tile>
             
             </Stack>
             </Grid>
+            
         </Grid>
    
 </Paper>
 <Button 
-  variant="outlined"
+  fullWidth
+  variant="contained"
   onClick={()=> generatePDF()}
+  sx={{mt:4}}
 >
-    Genreate PDF
+   DOWNLOAD PDF
 </Button>
-</Container>
+</Grid>
 );
 
 
