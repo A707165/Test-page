@@ -12,7 +12,7 @@ interface iTile{
 }
 
 const Item = styled(Paper)(({ theme }) => ({
-    backgroundColor: 'rgb(15, 15, 15)',
+    backgroundColor: 'rgb(0, 0, 0)',
     ...theme.typography.body2,
     padding: theme.spacing(1),
     textAlign: 'left',

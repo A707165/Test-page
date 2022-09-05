@@ -105,7 +105,7 @@ console.log(croppedArea)
 const RenderedForm = ({name,surname,why,education,core,relevant,role,softSkills,languages,fieldsToInclude,croppedArea,image} : ionSave) => {
     
 const Item = styled(Paper)(({ theme }) => ({
-    backgroundColor: 'rgb(9, 9, 9)',
+    backgroundColor: 'rgb(0, 0, 0)',
     ...theme.typography.body2,
     padding: theme.spacing(1),
     textAlign: 'left',
@@ -132,7 +132,7 @@ sx={{
     maxHeight: 793,
     minHeight: 793,
     flexGrow: 1,
-    backgroundColor: (theme) =>'rgb(9, 9, 9)',
+    backgroundColor: (theme) =>'rgb(0,0,0)',
     color: 'white',
        
 }}
