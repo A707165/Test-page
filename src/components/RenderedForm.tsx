@@ -1,74 +1,48 @@
 import Paper from '@mui/material/Paper';
 import Box from '@mui/material/Box';
 import '../styles/RenderedForm.css'
-import portriatPlaceholder from './portraitPlaceholder.png'
+import removeAccents from 'remove-accents'
 import { Button, ButtonBase, Container, Grid, Stack, styled, Typography } from '@mui/material';
 import { ionSave } from '../App';
 import Tile from './Tile';
-
-/*export interface iRenderedForm{
-    name: String,
-    surname: String
-    why:String
-
-    croppedArea: any
-}*/
-import DomToImage from 'dom-to-image';
-import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
-import { Scale } from '@mui/icons-material';
-
+import {font} from '../fonts/roboto';
 
 const CROP_AREA_ASPECT = 2 / 2;
 
 const generatePDF = () =>{
 
-
   const domElement = document.getElementById("OnePagerResult")!;
-
   const pdf = new jsPDF({
     orientation: "landscape",
-    unit: "px",
     userUnit: 300,
     hotfixes: ["px_scaling"],
-    format:  'a4'
-   
-    
-    
+    format:  'a4',
   });
-  let width = pdf.internal.pageSize.getWidth();
-  let height = pdf.internal.pageSize.getHeight();
-  let options = {
-    quality: 1,
-    width: 1122*4,
-    height: 793*4
-};
 
-  DomToImage.toJpeg(domElement, options).then(function (dataUrl) {
-
-
-   // pdf.addImage(dataUrl, 'JPEG', 0, 0,1122*4,793*4);
-  //  pdf.save(`${new Date().toISOString()}.pdf`);
-  
-});
-
-    html2canvas(domElement, {
-      windowHeight:793,
-      windowWidth:1122,
-      height:793,
-      width:1122,
-      scale: 1,
-    }).then(canvas => {
-      const imgData = canvas.toDataURL("image/png");
-
-      console.log(width,height)
-      pdf.addImage(imgData, 'JPEG', 0, 0,1122,793,'SLOW');
+  pdf.html(domElement,{
+    callback: function (pdf) {
+      pdf.addFileToVFS("Roboto-Regular-normal.ttf", font);
+      pdf.addFont("Roboto-Regular-normal.ttf", "Roboto-Regular", "normal");
+			pdf.setFont("Roboto-Regular");
+      console.log( pdf.getFont());
       pdf.save(`${new Date().toISOString()}.pdf`);
+    },
+    html2canvas:{
+      windowHeight:210,
+      windowWidth:297,
+      height:210,
+      width:297,
+      scale: .25,
+    },
+    autoPaging: false,
+    width:297,
+    windowWidth:297,
+    x: 0,
+    y: 0
     });
+
   }
-
-
-
 
 const Output = ({croppedArea,image }: any) => {
   const scale = 100 / croppedArea.width;
@@ -88,8 +62,6 @@ const Output = ({croppedArea,image }: any) => {
     
   };
 
-//console.log(image)
-console.log(croppedArea)
   return (
     <div
       className="output"
@@ -100,23 +72,19 @@ console.log(croppedArea)
   );
 };
 
-
-
 const RenderedForm = ({name,surname,why,education,core,relevant,role,softSkills,languages,fieldsToInclude,croppedArea,image} : ionSave) => {
     
 const Item = styled(Paper)(({ theme }) => ({
     backgroundColor: 'rgb(0, 0, 0)',
     ...theme.typography.body2,
     padding: theme.spacing(1),
+
     textAlign: 'left',
     color: 'white',
     overflowWrap: 'break-word',
     fontSize:'10px'
     
 }));
-    
-console.log(fieldsToInclude)
-
 
 return(
 <Grid container item xs={8} >
@@ -127,10 +95,10 @@ sx={{
     borderRadius:0,
     border: 0,
     margin: 'auto',
-    maxWidth: 1122,
-    minWidth: 1122,
-    maxHeight: 793,
-    minHeight: 793,
+    maxWidth: 1188,
+    minWidth: 1188,
+    maxHeight: 840,
+    minHeight: 840,
     flexGrow: 1,
     backgroundColor: (theme) =>'rgb(0,0,0)',
     color: 'white',
@@ -144,28 +112,27 @@ sx={{
                 </ButtonBase>
             </Grid>  
             <Grid item xs={4} container direction={'column'}>
-              <Typography  variant='h4'>{name}</Typography>  
-              <Typography  variant='h4'>{surname}</Typography>
-              <Typography color='rgb(5, 150, 255)' variant='h5'>{role}</Typography>
+              <Typography  variant='h4'>{removeAccents.remove(name)}</Typography>  
+              <Typography  variant='h4'>{removeAccents.remove(surname)}</Typography>
+              <Typography color='rgb(5, 150, 255)' variant='h5'>{removeAccents.remove(role)}</Typography>
             </Grid>
             <Grid item  xs={2} className="display-linebreak" > 
            
-            <Tile title={'Soft Skills'} display={fieldsToInclude[4]} content={softSkills}></Tile>
+            <Tile title={'Soft Skills'} display={fieldsToInclude[4]} content={removeAccents.remove(softSkills)}></Tile>
             
             </Grid>
             <Grid item  xs={2}  className="display-linebreak" > 
 
-            <Tile title={'Languages'} display={fieldsToInclude[5]} content={languages}></Tile>
+            <Tile title={'Languages'} display={fieldsToInclude[5]} content={removeAccents.remove(languages)}></Tile>
             
             </Grid>
-
 
             <Grid item  xs={6}  zeroMinWidth  className="display-linebreak" >
             <Stack spacing={2}>
             
-              <Tile title={'Why '+name+'?'} display={fieldsToInclude[0]} content={why}></Tile>
+              <Tile title={'Why '+removeAccents.remove(name) +'?'} display={fieldsToInclude[0]} content={removeAccents.remove(why)}></Tile>
 
-              <Tile title={'Education, Trainings/Certification'} display={fieldsToInclude[1]} content={education}></Tile>
+              <Tile title={'Education, Trainings/Certification'} display={fieldsToInclude[1]} content={removeAccents.remove(education)}></Tile>
               
               
            
@@ -173,8 +140,8 @@ sx={{
             </Grid>
             <Grid item  xs={6}  className="display-linebreak" > 
             <Stack spacing={2}>
-            <Tile title={'Core competencies/Technologies'} display={fieldsToInclude[2]} content={core}></Tile>
-            <Tile title={'Relevant project experience'} display={fieldsToInclude[3]} content={relevant}></Tile>
+            <Tile title={'Core competencies/Technologies'} display={fieldsToInclude[2]} content={removeAccents.remove(core)}></Tile>
+            <Tile title={'Relevant project experience'} display={fieldsToInclude[3]} content={removeAccents.remove(relevant)}></Tile>
             
             </Stack>
             </Grid>

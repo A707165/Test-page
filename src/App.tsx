@@ -20,15 +20,15 @@ import UserForm from './components/UserForm';
 import RenderedForm from './components/RenderedForm';
 import { PDFViewer } from '@react-pdf/renderer';
 export interface ionSave {
-  name : String,
-  surname : String 
-  why: String
-  education: String
-  core:String
-  relevant: String
-  role: String
-  softSkills: String
-  languages: String
+  name : string,
+  surname : string 
+  why: string
+  education: string
+  core:string
+  relevant: string
+  role: string
+  softSkills: string
+  languages: string
   fieldsToInclude: boolean[]
   croppedArea : any
   image: any
@@ -37,15 +37,15 @@ const App = () => {
 
 
   const theme = createTheme();
-  const [name,setName] = useState<String>('');
-  const [surname,setSurname] = useState<String>('');
-  const [why,setWhy] = useState<String>('');
-  const [education,setEducation] = useState<String>('');
-  const [core,setCore] = useState<String>('');
-  const [relevant,setRelevant] = useState<String>('');
-  const [role,setRole] = useState<String>('');
-  const [softSkills,setSoftSkills] = useState<String>('');
-  const [languages,setLanguages] = useState<String>('');
+  const [name,setName] = useState<string>('');
+  const [surname,setSurname] = useState<string>('');
+  const [why,setWhy] = useState<string>('');
+  const [education,setEducation] = useState<string>('');
+  const [core,setCore] = useState<string>('');
+  const [relevant,setRelevant] = useState<string>('');
+  const [role,setRole] = useState<string>('');
+  const [softSkills,setSoftSkills] = useState<string>('');
+  const [languages,setLanguages] = useState<string>('');
   const [croppedArea,setcroppedArea] = useState<any>('');
   const [image, setImage] = useState<any>();
   const [fieldsToInclude,setFieldsToInclude] = useState<boolean[]>([true,true,true,true,true,true]);

@@ -1,8 +1,7 @@
 import Paper from '@mui/material/Paper';
-import Box from '@mui/material/Box';
 import '../styles/RenderedForm.css'
-import ein from './einstein.jpg'
-import { Button, ButtonBase, Container, Grid, Stack, styled, Typography } from '@mui/material';
+import {styled, Typography } from '@mui/material';
+import { ContentCopySharp } from '@mui/icons-material';
 
 interface iTile{
     title: any,
@@ -25,14 +24,12 @@ const Item = styled(Paper)(({ theme }) => ({
 
 const Tile = ({content,title,display}: iTile) =>{
 
-
-
 if(display){
     return(
 
         <Item>
         <Typography color='rgb(5, 150, 255)' variant='h5'>{title}</Typography> 
-        <Item> {content} </Item>
+        <Item> {ContentCopySharp} </Item>
         </Item>
      
     )

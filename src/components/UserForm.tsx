@@ -1,37 +1,27 @@
 import React, { useState } from 'react';
-import {useRef, useEffect} from 'react';
-import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
-import Toolbar from '@mui/material/Toolbar';
-import Paper from '@mui/material/Paper';
-import { Avatar, FormControlLabel, Grid, TextField } from '@mui/material';
-import Stepper from '@mui/material/Stepper';
-import Step from '@mui/material/Step';
-import StepLabel from '@mui/material/StepLabel';
+import {FormControlLabel, Grid, TextField } from '@mui/material';
+
 import Button from '@mui/material/Button';
-import Link from '@mui/material/Link';
 import Switch from '@mui/material/Switch';
-import Typography from '@mui/material/Typography';
 import AvatarEdit from './Avatar';
 import {ionSave} from '../App'
-//import {iRenderedForm} from './RenderedForm'
 
 interface iUserForm {
 onSave : ({name,surname,why,education,core,relevant,role,fieldsToInclude,croppedArea,image}: ionSave) => void
-
 }
 
 const UserForm = ({onSave}:iUserForm) =>{
 
 const [name,setName] = useState<any>('');
 const [surname,setSurname] = useState<any>('');
-const [why,setWhy] = useState<String>('');
-const [education,setEducation] = useState<String>('');
-const [core,setCore] = useState<String>('');
-const [relevant,setRelevant] = useState<String>('');
-const [role,setRole] = useState<String>('');
-const [softSkills,setSoftSkills] = useState<String>('');
-const [languages,setLanguages] = useState<String>('');
+const [why,setWhy] = useState<string>('');
+const [education,setEducation] = useState<string>('');
+const [core,setCore] = useState<string>('');
+const [relevant,setRelevant] = useState<string>('');
+const [role,setRole] = useState<string>('');
+const [softSkills,setSoftSkills] = useState<string>('');
+const [languages,setLanguages] = useState<string>('');
 
 const [includeWhy,setIncludeWhy] = useState<boolean>(true);
 const [includeCore,setIncludeCore] = useState<boolean>(true);
@@ -44,13 +34,9 @@ const [croppedArea,setcroppedArea] = useState<any>();
 const [image, setImage] = useState<any>();
 
 const getAvatar = (croppedArea: any, image: any ) =>{
-
 setcroppedArea(croppedArea)
 setImage(image)
-
 }
-
-
 
 return(
     <Container component="main" maxWidth={false} sx={{ mb: 4 }}>
