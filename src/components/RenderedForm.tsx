@@ -1,8 +1,7 @@
 import Paper from '@mui/material/Paper';
-import Box from '@mui/material/Box';
 import '../styles/RenderedForm.css'
 import removeAccents from 'remove-accents'
-import { Button, ButtonBase, Container, Grid, Stack, styled, Typography } from '@mui/material';
+import { Button, ButtonBase, Grid, Stack, styled, Typography } from '@mui/material';
 import { ionSave } from '../App';
 import Tile from './Tile';
 import jsPDF from 'jspdf';
@@ -19,6 +18,7 @@ const generatePDF = () =>{
     hotfixes: ["px_scaling"],
     format:  'a4',
   });
+
 
   pdf.html(domElement,{
     callback: function (pdf) {
